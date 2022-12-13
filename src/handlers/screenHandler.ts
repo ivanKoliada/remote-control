@@ -1,5 +1,5 @@
 import { FileType, mouse, Region, screen } from '@nut-tree/nut-js';
-import { convertImageToBase64 } from '../utils';
+import { readFileSync } from 'fs';
 
 export const getScreenshotBase64 = async () => {
   const { x, y } = await mouse.getPosition();
@@ -11,7 +11,7 @@ export const getScreenshotBase64 = async () => {
     process.cwd() + '/src/assets',
   );
 
-  const base64 = convertImageToBase64(pathToImage);
+  const base64 = readFileSync(pathToImage, 'base64');
 
   return base64;
 };

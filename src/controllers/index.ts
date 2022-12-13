@@ -3,19 +3,18 @@ import { COMMAND } from '../constants';
 import * as Mouse from '../handlers/mouseHandler';
 import { drawCircle, drawRectangle, drawSquare } from '../handlers/drawHandler';
 import { getScreenshotBase64 } from '../handlers/screenHandler';
-import { getCurrentMousePosition, sendResponse } from '../helpers';
+import { mouse } from '@nut-tree/nut-js';
+import { sendResponse } from '../helpers';
 
 export const wsController = (ws: WebSocket) => {
   console.log('Connection to websocket server is success');
 
   ws.on('message', async (buffer: RawData) => {
-    const data = buffer.toString().split(' ');
-
-    const [command, width, length] = data;
+    const [command, width, length] = buffer.toString().split(' ');
 
     switch (command) {
       case COMMAND.MOUSE_POSITION:
-        const { x, y } = await getCurrentMousePosition();
+        const { x, y } = await mouse.getPosition();
         sendResponse(ws, `${command} ${x},${y}`);
         break;
 

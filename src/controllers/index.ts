@@ -1,4 +1,4 @@
-import { RawData, WebSocket } from 'ws';
+import { createWebSocketStream, WebSocket } from 'ws';
 import { COMMAND } from '../constants';
 import * as Mouse from '../handlers/mouseHandler';
 import { drawCircle, drawRectangle, drawSquare } from '../handlers/drawHandler';
@@ -9,53 +9,55 @@ import { sendResponse } from '../helpers';
 export const wsController = (ws: WebSocket) => {
   console.log('Connection to websocket server is success');
 
-  ws.on('message', async (buffer: RawData) => {
-    const [command, width, length] = buffer.toString().split(' ');
+  const duplex = createWebSocketStream(ws, { encoding: 'utf8', decodeStrings: false });
+
+  duplex.on('data', async (rawData: string) => {
+    const [command, width, length] = rawData.split(' ');
 
     switch (command) {
       case COMMAND.MOUSE_POSITION:
         const { x, y } = await mouse.getPosition();
-        sendResponse(ws, `${command} ${x},${y}`);
+        sendResponse(duplex, `${command} ${x},${y}`);
         break;
 
       case COMMAND.MOUSE_UP:
         await Mouse.moveUp(+width);
-        sendResponse(ws, command);
+        sendResponse(duplex, command);
         break;
 
       case COMMAND.MOUSE_DOWN:
         await Mouse.moveDown(+width);
-        sendResponse(ws, command);
+        sendResponse(duplex, command);
         break;
 
       case COMMAND.MOUSE_LEFT:
         await Mouse.moveLeft(+width);
-        sendResponse(ws, command);
+        sendResponse(duplex, command);
         break;
 
       case COMMAND.MOUSE_RIGHT:
         await Mouse.moveRight(+width);
-        sendResponse(ws, command);
+        sendResponse(duplex, command);
         break;
 
       case COMMAND.DRAW_CIRCLE:
         await drawCircle(+width);
-        sendResponse(ws, command);
+        sendResponse(duplex, command);
         break;
 
       case COMMAND.DRAW_RECTANGLE:
         await drawRectangle(+width, +length);
-        sendResponse(ws, command);
+        sendResponse(duplex, command);
         break;
 
       case COMMAND.DRAW_SQUARE:
         await drawSquare(+width);
-        sendResponse(ws, command);
+        sendResponse(duplex, command);
         break;
 
       case COMMAND.PRNT_SCRN:
         const base64 = await getScreenshotBase64();
-        sendResponse(ws, `${command} ${base64}`);
+        sendResponse(duplex, `${command} ${base64}`);
         break;
 
       default:

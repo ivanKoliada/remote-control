@@ -8,7 +8,7 @@ export const drawCircle = async (radius: number) => {
 
   for (let i = 0; i <= 2 * Math.PI + arccos; i += arccos) {
     await mouse.move(
-      straightTo({ x: x + radius * Math.sin(i), y: y + radius - radius * Math.cos(i) }),
+      straightTo({ x: x - radius * Math.sin(i), y: y - radius + radius * Math.cos(i) }),
     );
   }
 
@@ -16,6 +16,7 @@ export const drawCircle = async (radius: number) => {
 };
 
 export const drawRectangle = async (width: number, length: number) => {
+  mouse.config.mouseSpeed = 500;
   const { x, y } = await mouse.getPosition();
   // width = x - width <= 0 ?
   await mouse.pressButton(Button.LEFT);
@@ -27,6 +28,7 @@ export const drawRectangle = async (width: number, length: number) => {
 };
 
 export const drawSquare = async (width: number) => {
+  mouse.config.mouseSpeed = 500;
   const { x, y } = await mouse.getPosition();
   await mouse.pressButton(Button.LEFT);
   await mouse.move(left(width));

@@ -1,8 +1,8 @@
 import { createWebSocketStream, WebSocket } from 'ws';
 import { COMMAND } from '../constants';
-import * as Mouse from '../handlers/mouseHandler';
-import { drawCircle, drawRectangle, drawSquare } from '../handlers/drawHandler';
-import { getScreenshotBase64 } from '../handlers/screenHandler';
+import * as Mouse from '../services/mouse';
+import { drawCircle, drawRectangle, drawSquare } from '../services/draw';
+import { getScreenshotBase64 } from '../services/screen';
 import { mouse } from '@nut-tree/nut-js';
 import { sendResponse } from '../helpers';
 

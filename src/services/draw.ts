@@ -1,4 +1,4 @@
-import { mouse, Button, left, up, right, down, straightTo } from '@nut-tree/nut-js';
+import { mouse, Button, straightTo } from '@nut-tree/nut-js';
 
 export const drawCircle = async (radius: number) => {
   const { x, y } = await mouse.getPosition();
@@ -16,24 +16,23 @@ export const drawCircle = async (radius: number) => {
 };
 
 export const drawRectangle = async (width: number, length: number) => {
-  mouse.config.mouseSpeed = 500;
   const { x, y } = await mouse.getPosition();
-  // width = x - width <= 0 ?
-  await mouse.pressButton(Button.LEFT);
-  await mouse.move(left(width));
-  await mouse.move(up(length));
-  await mouse.move(right(width));
-  await mouse.move(down(length));
-  await mouse.releaseButton(Button.LEFT);
+
+  mouse.config.mouseSpeed = 500;
+
+  await mouse.drag(straightTo({ x: x + width, y }));
+  await mouse.drag(straightTo({ x: x + width, y: y + length }));
+  await mouse.drag(straightTo({ x, y: y + length }));
+  await mouse.drag(straightTo({ x, y}));
 };
 
 export const drawSquare = async (width: number) => {
-  mouse.config.mouseSpeed = 500;
   const { x, y } = await mouse.getPosition();
-  await mouse.pressButton(Button.LEFT);
-  await mouse.move(left(width));
-  await mouse.move(up(width));
-  await mouse.move(right(width));
-  await mouse.move(down(width));
-  await mouse.releaseButton(Button.LEFT);
+
+  mouse.config.mouseSpeed = 500;
+  
+  await mouse.drag(straightTo({ x: x + width, y }));
+  await mouse.drag(straightTo({ x: x + width, y: y + width }));
+  await mouse.drag(straightTo({ x, y: y + width }));
+  await mouse.drag(straightTo({ x, y }));
 };

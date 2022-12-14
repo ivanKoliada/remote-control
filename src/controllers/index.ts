@@ -1,10 +1,11 @@
 import { createWebSocketStream, WebSocket } from 'ws';
-import { COMMAND } from '../constants';
-import * as Mouse from '../services/mouse';
+import { mouse } from '@nut-tree/nut-js';
+
 import { drawCircle, drawRectangle, drawSquare } from '../services/draw';
 import { getScreenshotBase64 } from '../services/screen';
-import { mouse } from '@nut-tree/nut-js';
+import * as Mouse from '../services/mouse';
 import { sendResponse } from '../helpers';
+import { COMMAND } from '../constants';
 
 export const wsController = (ws: WebSocket) => {
   console.log('Connection to websocket server is success');

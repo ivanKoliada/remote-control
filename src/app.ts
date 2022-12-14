@@ -1,7 +1,7 @@
-import { HTTP_PORT, SOCKET_PORT } from './constants';
+import { wss } from './websocket';
 import { httpServer } from './http';
 import { wsController } from './controllers';
-import { wss } from './websocket';
+import { HTTP_PORT, SOCKET_PORT } from './constants';
 
 export const init = () => {
   httpServer.listen(HTTP_PORT, () => {

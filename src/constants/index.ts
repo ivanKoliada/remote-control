@@ -12,3 +12,6 @@ export const COMMAND = {
   DRAW_SQUARE: 'draw_square',
   PRNT_SCRN: 'prnt_scrn',
 };
+
+export const HALF_PRNT_SIZE = 100;
+export const PRNT_SIZE = 200;

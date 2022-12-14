@@ -13,5 +13,5 @@ export const COMMAND = {
   PRNT_SCRN: 'prnt_scrn',
 };
 
-export const HALF_PRNT_SIZE = 100;
 export const PRNT_SIZE = 200;
+export const HALF_PRNT_SIZE = PRNT_SIZE/2;

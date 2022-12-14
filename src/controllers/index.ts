@@ -18,47 +18,47 @@ export const wsController = (ws: WebSocket) => {
     switch (command) {
       case COMMAND.MOUSE_POSITION:
         const { x, y } = await mouse.getPosition();
-        sendResponse(duplex, `${command} ${x},${y}`);
+        sendResponse(duplex, `${command} ${x},${y}`, command);
         break;
 
       case COMMAND.MOUSE_UP:
         await Mouse.moveUp(+width);
-        sendResponse(duplex, command);
+        sendResponse(duplex, command, command);
         break;
 
       case COMMAND.MOUSE_DOWN:
         await Mouse.moveDown(+width);
-        sendResponse(duplex, command);
+        sendResponse(duplex, command, command);
         break;
 
       case COMMAND.MOUSE_LEFT:
         await Mouse.moveLeft(+width);
-        sendResponse(duplex, command);
+        sendResponse(duplex, command, command);
         break;
 
       case COMMAND.MOUSE_RIGHT:
         await Mouse.moveRight(+width);
-        sendResponse(duplex, command);
+        sendResponse(duplex, command, command);
         break;
 
       case COMMAND.DRAW_CIRCLE:
         await drawCircle(+width);
-        sendResponse(duplex, command);
+        sendResponse(duplex, command, command);
         break;
 
       case COMMAND.DRAW_RECTANGLE:
         await drawRectangle(+width, +length);
-        sendResponse(duplex, command);
+        sendResponse(duplex, command, command);
         break;
 
       case COMMAND.DRAW_SQUARE:
         await drawSquare(+width);
-        sendResponse(duplex, command);
+        sendResponse(duplex, command, command);
         break;
 
       case COMMAND.PRNT_SCRN:
         const base64 = await getScreenshotBase64();
-        sendResponse(duplex, `${command} ${base64}`);
+        sendResponse(duplex, `${command} ${base64}`, command);
         break;
 
       default:

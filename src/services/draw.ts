@@ -1,5 +1,7 @@
 import { mouse, Button, straightTo, left, down, right, up } from '@nut-tree/nut-js';
 
+mouse.config.mouseSpeed = 300;
+
 export const drawCircle = async (radius: number) => {
   const { x, y } = await mouse.getPosition();
   const arccos = (Math.acos(1 / radius) * Math.PI) / 180;
@@ -16,7 +18,6 @@ export const drawCircle = async (radius: number) => {
 };
 
 export const drawRectangle = async (width: number, length: number) => {
-  mouse.config.mouseSpeed = 300;
 
   await mouse.pressButton(Button.LEFT);
   await mouse.move(left(width));
@@ -27,7 +28,6 @@ export const drawRectangle = async (width: number, length: number) => {
 };
 
 export const drawSquare = async (width: number) => {
-  mouse.config.mouseSpeed = 300;
 
   await mouse.pressButton(Button.LEFT);
   await mouse.move(left(width));

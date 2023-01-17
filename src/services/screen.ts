@@ -1,5 +1,5 @@
-import { FileType, mouse, Region, screen } from '@nut-tree/nut-js';
-import { readFileSync } from 'fs';
+import Jimp from 'jimp';
+import { mouse, Region, screen } from '@nut-tree/nut-js';
 
 import { HALF_PRNT_SIZE, PRNT_SIZE } from '../constants';
 
@@ -23,14 +23,18 @@ export const getScreenshotBase64 = async () => {
     yPos = screenY - PRNT_SIZE;
   }
 
-  const pathToImage = await screen.captureRegion(
-    'screenshot',
-    new Region(xPos, yPos, PRNT_SIZE, PRNT_SIZE),
-    FileType.PNG,
-    process.cwd() + '/src/assets',
-  );
 
-  const base64 = readFileSync(pathToImage, 'base64');
+  const region = new Region(xPos, yPos, PRNT_SIZE, PRNT_SIZE);
+
+  const BRGImage = await screen.grabRegion(region);
+
+  const RGBImage = await BRGImage.toRGB();
+
+  const image = new Jimp(RGBImage);
+
+  const buffer = await image.getBufferAsync(Jimp.MIME_PNG);
+
+  const base64 = buffer.toString('base64');
 
   return base64;
 };
